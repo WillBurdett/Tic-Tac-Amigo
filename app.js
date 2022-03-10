@@ -19,7 +19,7 @@ const start = function(){
     const score = document.querySelector(".current-score")
 
     const updateScore = function(){
-        score.innerText = playerX+ ": " + playerXWins + "   " + playerO + ": " + playerOWins;
+        score.innerHTML = '<span class = playerX>' + playerX+ '</span>: ' + playerXWins + '   ' + '<span class = playerO>'+ playerO + "</span>: " + playerOWins;
     }
 
     updateScore();
