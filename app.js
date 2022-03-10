@@ -40,13 +40,13 @@ const start = function(){
     const updateScore = function(){
         score.innerHTML = '<span class = playerX>' + playerX+ '</span>: ' + playerXWins + '   ' + '<span class = playerO>'+ playerO + "</span>: " + playerOWins;
     }
+
     let display = document.querySelector(".display");
-   display.innerHTML = '<span class = "display-player playerX">' + playerX + '\'s' + '</span> turn!';
+    display.innerHTML = '<span class = "display-player playerX">' + playerX + '\'s' + '</span> turn!';
+
     updateScore();
 
-   
-
-   const tiles = Array.from(document.querySelectorAll(".tile"));
+    const tiles = Array.from(document.querySelectorAll(".tile"));
 
    const whoseTurn = document.querySelector(".display-player");
 
@@ -123,15 +123,28 @@ const start = function(){
     // console.log(playerX+": " + playerXWins + "   " + playerO + ": " + playerOWins);
    }
 
-   const validateMove = function(index){
-        if (board[index] === ""){
-            return true
+    const validateMove = function(index){
+        if (board[index] == ""){
+            return true;
+        } else if (board[index] !== "") {
+            console.log("not available") 
+            return false;
         }
-        return false;
-   }
+    }
+
+    // const randomNum = () => Math.floor(Math.random() * 9);
+    const computerFindMove = function(){
+        let possibleMoves = []
+        for (let i=0; i< board.length; i++){
+            if (board[i] === ""){
+                possibleMoves.push(i)
+            }
+        }
+        return possibleMoves[Math.floor(Math.random() * possibleMoves.length)]
+    }
 
    const changePlayer = function(){
-       // removes class attributes of current player so design is distinct for both players
+       
        whoseTurn.classList.remove("player" + currentPlayer)
 
        currentPlayer = currentPlayer === "X" ? "O" : "X";
@@ -141,6 +154,15 @@ const start = function(){
        whoseTurn.innerText = currentPlayerName + "'s";
        
        whoseTurn.classList.add("player" + currentPlayer); 
+
+       if (vsComputer && currentPlayer === "O"){
+
+            let move = computerFindMove();
+
+            setTimeout( function(){
+            userAction(tiles[move], move);
+            }, 1000);
+       }
    }
 
    const updateBoard = function(index){
@@ -149,14 +171,15 @@ const start = function(){
 
    const userAction = function(tile, index){
 
-    if (validateMove(index) && isGameOn && tile.innerText === ""){
-        tile.innerText = currentPlayer;
-        tile.classList.add(`player${currentPlayer}`);
-        updateBoard(index);
-        checkForWinner();
-        changePlayer();
-    }
+        if (validateMove(index) && isGameOn && tile.innerText === ""){
+            tile.innerText = currentPlayer;
+            tile.classList.add("player" + currentPlayer);
+            updateBoard(index);
+            checkForWinner();
+            changePlayer();
+        }
    }
+
    tiles.forEach((tile, index) => {
         tile.addEventListener('click', () => userAction(tile, index))
     });
