@@ -27,6 +27,14 @@
     margin-bottom: 1em;
 }
 
+.scoreboard{
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 .hide {
     display: none;
 }

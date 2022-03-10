@@ -2,6 +2,9 @@
 let playerX;
 let playerO;
 
+let playerXWins = 0;
+let playerOWins = 0;
+
 const setNames = () =>{
     let currentName = "Player X's";
     playerX = prompt("Please enter  " + currentName + " name");
@@ -12,6 +15,14 @@ const setNames = () =>{
 const start = function(){
 
     setNames();
+
+    const score = document.querySelector(".current-score")
+
+    const updateScore = function(){
+        score.innerText = playerX+ ": " + playerXWins + "   " + playerO + ": " + playerOWins;
+    }
+
+    updateScore();
 
    let display = document.querySelector(".display");
    display.innerHTML = '<span class = "display-player playerX">' + playerX + '\'s' + '</span> turn!';
@@ -78,14 +89,19 @@ const start = function(){
     switch (result){
         case "X":
             announcement.innerHTML = '<span class="playerX">' + playerX + '</span> won!';
+            playerXWins++
+            updateScore();
         break;
         case "O":
             announcement.innerHTML = '<span class="playerO">' + playerO + '</span> won!';
+            playerOWins++
+            updateScore();
         break;
         case "tie":
             announcement.innerText = 'Tie!';
     }
     announcement.classList.remove("hide")
+    // console.log(playerX+": " + playerXWins + "   " + playerO + ": " + playerOWins);
    }
 
    const validateMove = function(index){
@@ -103,7 +119,7 @@ const start = function(){
 
        let currentPlayerName = currentPlayer === "X" ? playerX : playerO;
 
-       whoseTurn.innerText = currentPlayerName;
+       whoseTurn.innerText = currentPlayerName + "'s";
        
        whoseTurn.classList.add("player" + currentPlayer); 
    }
