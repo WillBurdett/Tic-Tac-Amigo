@@ -8,8 +8,8 @@ let playerOWins = 0;
 let vsComputer = false;
 
 const setNamesAndMode = () =>{
-    const gameMode = prompt("Please enter PVP or PC");
-    if (gameMode === "PC"){
+    const gameMode = prompt("One or Two Player? (enter 1 or 2)");
+    if (gameMode === "1"){
         vsComputer = true;
         // start game against computer function
         playerX = prompt("Please enter your name");
@@ -109,6 +109,10 @@ const start = function(){
         case "X":
             announcement.innerHTML = '<span class="playerX">' + playerX + '</span> won!';
             playerXWins++
+            if (vsComputer === true){
+                var audio = new Audio('amigo-quit-audio.mp3')
+                audio.play();
+            }
             updateScore();
         break;
         case "O":
