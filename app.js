@@ -126,6 +126,23 @@ const start = function(){
         tile.addEventListener('click', () => userAction(tile, index))
     });
 
+    const resetBoard = function(){
+        board = ["", "", "", "", "", "", "", "", ""];
+        isGameOn = true;
+        announcement.classList.add("hide");
+        if (currentPlayer === "O"){
+            changePlayer();
+        }
+        tiles.forEach(tile => {
+            tile.innerText = "";
+            tile.classList.remove("playerX");
+            tile.classList.remove("playerO");
+        })
+    }
+
+    restart.addEventListener("click", () => resetBoard());
+    
+
 }
 
 start();
