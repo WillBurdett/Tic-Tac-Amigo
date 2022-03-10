@@ -5,7 +5,7 @@ let playerO;
 const setNames = () =>{
     let currentName = "Player X's";
     playerX = prompt("Please enter  " + currentName + " name");
-    currentName = "Player 0's";
+    currentName = "Player O's";
     playerO = prompt("Please enter  " + currentName + " name");
 }
 
@@ -13,8 +13,8 @@ const start = function(){
 
     setNames();
 
-   let display = document.querySelector(".display")
-   display.innerHTML = ' <span class = "playerX">' + playerX + '\'s' + '</span> turn!'
+   let display = document.querySelector(".display");
+   display.innerHTML = '<span class = "display-player playerX">' + playerX + '\'s' + '</span> turn!';
 
    const tiles = Array.from(document.querySelectorAll(".tile"));
 
@@ -27,7 +27,7 @@ const start = function(){
    let board = ["", "", "", "", "", "", "", "", ""];
 
 // [0,1,2]
-// [3,4,5]
+// [3,4,5] 
 // [6,7,8]
 
    let currentPlayer = 'X';
@@ -65,6 +65,7 @@ const start = function(){
         if (roundWon){
             isGameOn = false;
             announceResult(currentPlayer);
+            console.log("winner")
         }
 
         if (!board.includes("")){
@@ -76,14 +77,13 @@ const start = function(){
    const announceResult = function(result){
     switch (result){
         case "X":
-            announcement.innerHTML('<span class="playerX">' + playerX + '</span> won!')
+            announcement.innerHTML = '<span class="playerX">' + playerX + '</span> won!';
         break;
         case "O":
-            announcement.innerHTML('<span class="playerO">' + playerO + '</span> won!')
+            announcement.innerHTML = '<span class="playerO">' + playerO + '</span> won!';
         break;
         case "tie":
-            announcement.innerHTML('Tie!')
-        break;
+            announcement.innerText = 'Tie!';
     }
     announcement.classList.remove("hide")
    }
@@ -94,6 +94,37 @@ const start = function(){
         }
         return false;
    }
+
+   const changePlayer = function(){
+       // removes class attributes of current player so design is distinct for both players
+       whoseTurn.classList.remove("player" + currentPlayer)
+
+       currentPlayer = currentPlayer === "X" ? "O" : "X";
+
+       let currentPlayerName = currentPlayer === "X" ? playerX : playerO;
+
+       whoseTurn.innerText = currentPlayerName;
+       
+       whoseTurn.classList.add("player" + currentPlayer); 
+   }
+
+   const updateBoard = function(index){
+       board[index] = currentPlayer;
+   }
+
+   const userAction = function(tile, index){
+
+    if (validateMove(index) && isGameOn && tile.innerText === ""){
+        tile.innerText = currentPlayer;
+        tile.classList.add(`player${currentPlayer}`);
+        updateBoard(index);
+        checkForWinner();
+        changePlayer();
+    }
+   }
+   tiles.forEach((tile, index) => {
+        tile.addEventListener('click', () => userAction(tile, index))
+    });
 
 }
 
