@@ -5,27 +5,46 @@ let playerO;
 let playerXWins = 0;
 let playerOWins = 0;
 
-const setNames = () =>{
-    let currentName = "Player X's";
-    playerX = prompt("Please enter  " + currentName + " name");
-    currentName = "Player O's";
-    playerO = prompt("Please enter  " + currentName + " name");
+let vsComputer = false;
+
+const setNamesAndMode = () =>{
+    const gameMode = prompt("Please enter PVP or PC");
+    if (gameMode === "PC"){
+        vsComputer = true;
+        // start game against computer function
+        playerX = prompt("Please enter your name");
+        if (playerX === null){
+            playerX = "Player 1";
+        }
+        playerO = "Nelson"
+    } else {
+        let currentName = "Player X's";
+        playerX = prompt("Please enter  " + currentName + " name");
+        currentName = "Player O's";
+        playerO = prompt("Please enter  " + currentName + " name")
+        if (playerX === null){
+            playerX = "Player 1";
+        }
+        if (playerO === null){
+            playerO = "Player 2";
+        }
+    }
 }
 
 const start = function(){
 
-    setNames();
+    setNamesAndMode();
 
     const score = document.querySelector(".current-score")
 
     const updateScore = function(){
         score.innerHTML = '<span class = playerX>' + playerX+ '</span>: ' + playerXWins + '   ' + '<span class = playerO>'+ playerO + "</span>: " + playerOWins;
     }
-
+    let display = document.querySelector(".display");
+   display.innerHTML = '<span class = "display-player playerX">' + playerX + '\'s' + '</span> turn!';
     updateScore();
 
-   let display = document.querySelector(".display");
-   display.innerHTML = '<span class = "display-player playerX">' + playerX + '\'s' + '</span> turn!';
+   
 
    const tiles = Array.from(document.querySelectorAll(".tile"));
 
@@ -37,9 +56,9 @@ const start = function(){
 
    let board = ["", "", "", "", "", "", "", "", ""];
 
-// [0,1,2]
-// [3,4,5] 
-// [6,7,8]
+    // [0,1,2]
+    // [3,4,5] 
+    // [6,7,8]
 
    let currentPlayer = 'X';
 
