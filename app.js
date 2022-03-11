@@ -98,7 +98,7 @@ const start = function(){
             console.log("winner")
         }
 
-        if (!board.includes("")){
+        if (!board.includes("") && !roundWon){
             isGameOn = false;
             announceResult("tie");
         }
@@ -118,6 +118,10 @@ const start = function(){
         case "O":
             announcement.innerHTML = '<span class="playerO">' + playerO + '</span> won!';
             playerOWins++
+            if (vsComputer === true){
+                var audio = new Audio('amigo-smash-the-like-button.mp3')
+                audio.play();
+            }
             updateScore();
         break;
         case "tie":
@@ -137,7 +141,12 @@ const start = function(){
     }
 
     // const randomNum = () => Math.floor(Math.random() * 9);
+    // returns an index of a space on our board that's free ("")
+    // will prioritise the middle square, if not available, randomly picks an available one
     const computerFindMove = function(){
+        if (board[4] === ""){
+            return 4;
+        }
         let possibleMoves = []
         for (let i=0; i< board.length; i++){
             if (board[i] === ""){
@@ -161,7 +170,7 @@ const start = function(){
 
        if (vsComputer && currentPlayer === "O"){
 
-            let move = computerFindMove();
+            let move = computerFindMove(); // 4
 
             setTimeout( function(){
             userAction(tiles[move], move);
@@ -176,6 +185,11 @@ const start = function(){
    const userAction = function(tile, index){
 
         if (validateMove(index) && isGameOn && tile.innerText === ""){
+            if (vsComputer){
+                const iphoneDing = new Audio('iphone-ding-v3.mp3')
+                iphoneDing.volume = 0.2;
+                iphoneDing.play();
+            }
             tile.innerText = currentPlayer;
             tile.classList.add("player" + currentPlayer);
             updateBoard(index);
@@ -209,5 +223,3 @@ const start = function(){
 
 start();
 
-console.log(playerX)
-console.log(playerO)
