@@ -170,9 +170,9 @@ const start = function(){
 
        if (vsComputer && currentPlayer === "O"){
 
-            let move = computerFindMove(); // 4
+            let move = computerFindMove(); 
 
-            setTimeout( function(){
+            setTimeout(function(){
             userAction(tiles[move], move);
             }, 1000);
        }
@@ -185,7 +185,7 @@ const start = function(){
    const userAction = function(tile, index){
 
         if (validateMove(index) && isGameOn && tile.innerText === ""){
-            if (vsComputer){
+            if (vsComputer && currentPlayer === "X"){
                 const iphoneDing = new Audio('iphone-ding-v3.mp3')
                 iphoneDing.volume = 0.2;
                 iphoneDing.play();
