@@ -35,7 +35,7 @@ const start = function(){
 
     setNamesAndMode();
 
-    const score = document.querySelector(".current-score")
+    const score = document.querySelector(".current-score");
 
     const updateScore = function(){
         score.innerHTML = '<span class = playerX>' + playerX+ '</span>: ' + playerXWins + '   ' + '<span class = playerO>'+ playerO + "</span>: " + playerOWins;
@@ -46,7 +46,7 @@ const start = function(){
 
     updateScore();
 
-    const tiles = Array.from(document.querySelectorAll(".tile"));
+   const tiles = Array.from(document.querySelectorAll(".tile"));
 
    const whoseTurn = document.querySelector(".display-player");
 
@@ -147,7 +147,7 @@ const start = function(){
         if (board[4] === ""){
             return 4;
         }
-        let possibleMoves = []
+        let possibleMoves = [];
         for (let i=0; i< board.length; i++){
             if (board[i] === ""){
                 possibleMoves.push(i)
@@ -170,6 +170,10 @@ const start = function(){
 
        if (vsComputer && currentPlayer === "O"){
 
+            // const waitForNum = async function(){ 
+            // const move = await computerFindMove();
+            // userAction(tiles[move], move);
+            // }
             let move = computerFindMove(); 
 
             setTimeout(function(){
@@ -215,10 +219,7 @@ const start = function(){
             tile.classList.remove("playerO");
         })
     }
-
     restart.addEventListener("click", () => resetBoard());
-    
-
 }
 
 start();
